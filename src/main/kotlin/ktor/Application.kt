@@ -19,5 +19,4 @@ fun Application.module() {
     val registerUseCase = RegisterUseCase(usuarioRepository)
     val loginUseCase = LoginUseCase(usuarioRepository)
 
-    configureRouting(registerUseCase, loginUseCase)
 }

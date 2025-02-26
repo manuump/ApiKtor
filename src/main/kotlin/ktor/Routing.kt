@@ -1,8 +1,6 @@
 package com.example.ktor
 
 import com.example.domain.models.Usuario
-import com.example.domain.usecase.LoginUseCase
-import com.example.domain.usecase.RegisterUseCase
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.http.content.*
@@ -12,14 +10,11 @@ import io.ktor.server.routing.*
 
 fun Application.configureRouting(
     registerUseCase: RegisterUseCase,
-    loginUseCase: LoginUseCase
 ) {
-
 
     routing {
         // Ruta de prueba
         get("/") {
-            call.respondText("Backend inicado!")
         }
 
         // Rutas estáticas
@@ -46,7 +41,6 @@ fun Route.usuarioRoutes(
             val usuario = call.receive<Usuario>()
             val loggedInUsuario = loginUseCase(usuario.username, usuario.password)
             if (loggedInUsuario != null) {
-                call.respond(HttpStatusCode.OK, "Has iniciado sesion con exito")
             } else {
                 call.respond(HttpStatusCode.Unauthorized, "Credenciales inválidas")
             }
