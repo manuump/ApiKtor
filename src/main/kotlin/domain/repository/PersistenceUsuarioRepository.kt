@@ -1,6 +1,7 @@
 package com.example.domain.repository
 
 import com.example.domain.models.Usuario
+import com.example.domain.models.Usuarios
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -31,10 +32,3 @@ class PersistenceUsuarioRepository : UsuarioRepository {
     }
 }
 
-object Usuarios : Table("usuarios") {
-    val id = integer("id").autoIncrement()
-    val username = varchar("username", 50).uniqueIndex()
-    val password = varchar("password", 100)
-
-    override val primaryKey = PrimaryKey(id)
-}

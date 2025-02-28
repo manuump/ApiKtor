@@ -29,6 +29,6 @@ CREATE TABLE IF NOT EXISTS eventos (
 
 -- Insertar eventos de prueba
 INSERT INTO eventos (titulo, descripcion, imagen) VALUES
-('Concierto de Rock', 'Un concierto increíble con las mejores bandas de rock.', 'https://ejemplo.com/imagen1.jpg'),
-('Festival de Cine', 'Disfruta de las mejores películas independientes.', 'https://ejemplo.com/imagen2.jpg'),
-('Feria Gastronómica', 'Prueba los platos más deliciosos de la región.', 'https://ejemplo.com/imagen3.jpg');
+('Castillo de Santa Catalina', 'Visita guiada al Castillo', 'castillosantacatalina.png'),
+('Real Jaén CF', 'Información sobre partidos del Real Jaen', 'realjaen.png'),
+('Festival LaMonaFest', 'II edición del festival', 'lamonafest.png');

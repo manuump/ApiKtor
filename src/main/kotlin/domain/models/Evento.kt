@@ -5,7 +5,7 @@ import org.jetbrains.exposed.sql.Table
 
 @Serializable
 data class Evento(
-    val id: Int? = null, // ID opcional para facilitar la creación de nuevos eventos
+    val id: Int? = null,
     val titulo: String,
     val descripcion: String,
     val imagen: String

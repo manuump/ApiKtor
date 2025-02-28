@@ -100,7 +100,7 @@ fun Route.eventoRoutes(
         }
 
         // Crear un nuevo evento
-        post {
+        post("/add") {
             val evento = call.receive<Evento>()
             val nuevoEvento = createEventoUseCase(evento)
             call.respond(HttpStatusCode.Created, nuevoEvento)
@@ -123,7 +123,7 @@ fun Route.eventoRoutes(
         }
 
         // Eliminar un evento
-        delete("{id}") {
+        delete("/del/{id}") {
             val id = call.parameters["id"]?.toIntOrNull()
             if (id == null) {
                 call.respond(HttpStatusCode.BadRequest, "ID inválido")
