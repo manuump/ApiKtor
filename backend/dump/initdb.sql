@@ -7,12 +7,13 @@ USE ociojaen;
 CREATE TABLE IF NOT EXISTS usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(64) NOT NULL
+    password VARCHAR(64) NOT NULL,
+    token VARCHAR(255)
 );
 
 -- Insertar usuario de prueba con contraseña hasheada previamente
-INSERT INTO usuarios (username, password) VALUES
-('admin', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd1c54ca5f9a6a0ab58');
+INSERT INTO usuarios (username, password , token) VALUES
+('admin', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd1c54ca5f9a6a0ab58', '');
 
 -- Asegúrate de que la base de datos existe
 CREATE DATABASE IF NOT EXISTS ociojaen;

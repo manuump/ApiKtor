@@ -24,7 +24,31 @@ class PersistenceUsuarioRepository : UsuarioRepository {
                     Usuario(
                         id = it[Usuarios.id],
                         username = it[Usuarios.username],
-                        password = it[Usuarios.password]
+                        password = it[Usuarios.password],
+                        token = it[Usuarios.token]
+                    )
+                }
+                .singleOrNull()
+        }
+    }
+
+    override suspend fun updateToken(userId: Int, token: String) {
+        transaction {
+            Usuarios.update({ Usuarios.id eq userId }) {
+                it[Usuarios.token] = token
+            }
+        }
+    }
+
+    override suspend fun getUsuarioById(userId: Int): Usuario? {
+        return transaction {
+            Usuarios.selectAll().where { Usuarios.id eq userId }
+                .map {
+                    Usuario(
+                        id = it[Usuarios.id],
+                        username = it[Usuarios.username],
+                        password = it[Usuarios.password],
+                        token = it[Usuarios.token]
                     )
                 }
                 .singleOrNull()

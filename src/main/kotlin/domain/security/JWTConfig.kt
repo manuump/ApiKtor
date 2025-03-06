@@ -1,43 +1,26 @@
 package domain.security
 
-import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.JWT
-import io.ktor.server.auth.jwt.*
-import java.sql.Date
-
+import com.auth0.jwt.algorithms.Algorithm
+import java.util.*
 
 object JWTConfig {
-    private const val secret = "keyfh3081t04y1" //clave
-    private const val issuer = "domain.com"
-    private const val audience = "ktor_audience"
-    private const val realm = "ktor_realm"
-    private val algorithm = Algorithm.HMAC256(secret)
+    private const val SECRET = "u4hr78139gp43"
+    private const val ISSUER = "domain.com"
+    private const val VALIDITY_IN_MS = 36_000_00 * 24 // 24 horas
 
+    val algorithm = Algorithm.HMAC256(SECRET)
 
-    fun generateToken(dni: String): String {
+    val verifier = JWT.require(algorithm)
+        .withIssuer(ISSUER)
+        .build()
+
+    fun generateToken(userId: Int, username: String): String {
         return JWT.create()
-            .withIssuer(issuer)
-            .withAudience(audience)
-            .withSubject("Authentication")
-            .withClaim("dni", dni) //son específicas del usuario.
-            .withClaim("time", System.currentTimeMillis()) //específicas del usuario.
-            // .withExpiresAt(Date(System.currentTimeMillis() + 600000))  // Expira en 10 min
+            .withIssuer(ISSUER)
+            .withClaim("userId", userId)
+            .withClaim("username", username)
+            .withExpiresAt(Date(System.currentTimeMillis() + VALIDITY_IN_MS))
             .sign(algorithm)
     }
-
-    fun configureAuthentication(config: JWTAuthenticationProvider.Config) {
-        config.realm = realm
-        config.verifier(
-            JWT.require(algorithm)
-                .withIssuer(issuer)
-                .withAudience(audience)
-                .build()
-        )
-        config.validate { credential ->
-            if (credential.payload.getClaim("dni").asString() != null) {
-                JWTPrincipal(credential.payload)
-            } else null
-        }
-    }
 }
-
