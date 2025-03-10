@@ -15,7 +15,7 @@ object Eventos : Table("eventos") {
     val id = integer("id").autoIncrement()
     val titulo = varchar("titulo", 255)
     val descripcion = text("descripcion")
-    val imagen = varchar("imagen", 255)
+    val imagen = text("imagen")
 
     override val primaryKey = PrimaryKey(id)
 }

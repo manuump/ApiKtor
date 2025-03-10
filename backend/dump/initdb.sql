@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS eventos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(255) NOT NULL,
     descripcion TEXT NOT NULL,
-    imagen VARCHAR(255) NOT NULL
+    imagen TEXT NOT NULL
 );
 
 -- Insertar eventos de prueba
