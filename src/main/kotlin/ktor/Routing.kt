@@ -58,6 +58,7 @@ fun Route.usuarioRoutes(
         post("/register") {
             val usuario = call.receive<Usuario>()
             val createdUsuario = registerUseCase(usuario)
+            println("Usuario registrado: $createdUsuario")
             call.respond(HttpStatusCode.Created, createdUsuario)
         }
 
@@ -65,8 +66,10 @@ fun Route.usuarioRoutes(
             val usuario = call.receive<Usuario>()
             val token = loginUseCase(usuario.username, usuario.password)
             if (token != null) {
+                println("Login exitoso. Token generado: $token")
                 call.respond(HttpStatusCode.OK, mapOf("token" to token))
             } else {
+                println("Login fallido. Credenciales inválidas")
                 call.respond(HttpStatusCode.Unauthorized, "Credenciales inválidas")
             }
         }
@@ -96,6 +99,7 @@ fun Route.eventoRoutes(
                     val usuario = usuarioRepository.getUsuarioById(userId)
                     if (usuario != null && usuario.token == token) {
                         val eventos = getAllEventosUseCase()
+                        println("Eventos obtenidos: $eventos")
                         call.respond(HttpStatusCode.OK, eventos)
                     } else {
                         call.respond(HttpStatusCode.Unauthorized, "Token inválido")
@@ -127,6 +131,7 @@ fun Route.eventoRoutes(
                         }
                         val evento = getEventoByIdUseCase(id)
                         if (evento != null) {
+                            println("Evento encontrado: $evento")
                             call.respond(HttpStatusCode.OK, evento)
                         } else {
                             call.respond(HttpStatusCode.NotFound, "Evento no encontrado")
@@ -156,6 +161,7 @@ fun Route.eventoRoutes(
                     if (usuario != null && usuario.token == token) {
                         val evento = call.receive<Evento>()
                         val nuevoEvento = createEventoUseCase(evento)
+                        println("Evento creado: $nuevoEvento")
                         call.respond(HttpStatusCode.Created, nuevoEvento)
                     } else {
                         call.respond(HttpStatusCode.Unauthorized, "Token inválido")
@@ -188,6 +194,7 @@ fun Route.eventoRoutes(
                         val evento = call.receive<Evento>()
                         val actualizado = updateEventoUseCase(id, evento)
                         if (actualizado) {
+                            println("Evento actualizado con éxito")
                             call.respond(HttpStatusCode.OK, "Evento actualizado con éxito")
                         } else {
                             call.respond(HttpStatusCode.NotFound, "Evento no encontrado")
@@ -222,6 +229,7 @@ fun Route.eventoRoutes(
                         }
                         val eliminado = deleteEventoUseCase(id)
                         if (eliminado) {
+                            println("Evento eliminado con éxito")
                             call.respond(HttpStatusCode.OK, "Evento eliminado con éxito")
                         } else {
                             call.respond(HttpStatusCode.NotFound, "Evento no encontrado")
